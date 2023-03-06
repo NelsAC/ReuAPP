@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { useAgenda } from '../../hooks/useAgenda';
 import { Table } from '../components/Table';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ManagementView = () => {
 
@@ -54,6 +56,8 @@ export const ManagementView = () => {
             </div>
             </div>
             <Table data={ all } rowsPerPage={ rows } />
+            
+            <ToastContainer />
         </div>
     )
 }

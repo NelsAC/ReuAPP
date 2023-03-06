@@ -13,6 +13,9 @@ registerLocale('es', es);
 
 export const StepOne = ({ setStep }) => {
 
+    // localStorage.removeItem('fechaDesde');
+    // localStorage.removeItem('fechaHasta');
+
     
     const disabledDate = document.querySelector('.fondo-blur');
     const [ disabledButton, setDisabledButton ] = useState(true);
@@ -26,9 +29,11 @@ export const StepOne = ({ setStep }) => {
           const [start, end] = dates;
           if (start !== null && typeof start !== 'number' ) {
               setStartDate(start.getTime());
+              localStorage.setItem('fechaDesde', start.getTime());
           }
           if (end !== null && typeof end !== 'number' ) {
             setEndDate(end.getTime());
+            localStorage.setItem('fechaHasta', end.getTime());
           }
           if (start !== null && end !== null) {
             disabledDate.classList.add('show');
@@ -41,6 +46,8 @@ export const StepOne = ({ setStep }) => {
             setDisabledButton(true);
             setStartDate(null);
             setEndDate(null);
+            localStorage.removeItem('fechaDesde');
+            localStorage.removeItem('fechaHasta');
         }
 
     return (

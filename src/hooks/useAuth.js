@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import agendaApi from "../api/agendaApi";
 import { useAuthStore } from "../store/auth"
 
@@ -96,6 +97,76 @@ export const useAuth = () => {
         }
     }
 
+    const deleteUser = async (id) => {
+
+        try {
+
+            const { data } = await agendaApi.delete(`/auth/${id}`);
+            if (data.ok) {
+                const newAllUsers = allUsers.filter( user => user._id !== id );
+                setUsers(newAllUsers);
+                toast.success(data.msg);
+            }
+        } catch (error) {
+
+            console.log('Error en el registro', error);
+
+        }
+    }
+
+    const updateUser = async (id) => {
+
+        try {
+
+            const { data } = await agendaApi.get(`/auth/${id}`);
+            if (data.ok) {
+                const { user } = data.usuario;
+
+
+
+                const { value: formValues } = await Swal.fire({
+                    title: 'Actualizar usuario',
+                    confirmButtonText: 'Actualizar',
+                    confirmButtonColor: 'rgb(3 105 161)',
+                    html:
+                        `
+                        <div class="text-left">
+                            <label class='text-md'>Usuario:</label>
+                            <input id="user" type='text' class='w-full border border-gray-300 rounded-lg py-2 px-4 mt-2' placeholder='Example: User' name='user' value=${user} />
+                        </div>
+                        <div class='mt-4 text-left'>
+                            <label class='text-md'>Ingrese una nueva contraseña:</label>
+                            <input autofocus id="password" type='password' class='w-full border border-gray-300 rounded-lg py-2 px-4 mt-2' name='password' /> 
+                        </div>
+                        `
+                        ,
+                        focusConfirm: false,
+                        preConfirm: () => {
+                            return [
+                            document.getElementById('user').value,
+                            document.getElementById('password').value
+                            ]
+                        }
+                })
+                
+                if (formValues) {
+                    const [user, password] = formValues;
+                    const { data } = await agendaApi.put(`/auth/${id}`, { user, password });
+                    if (data.ok) {
+                        const newAllUsers = allUsers.map( user => user._id === id ? data.usuario : user );
+                        setUsers(newAllUsers);
+                        toast.success(data.msg);
+                    }
+                }
+            }
+
+        } catch (error) {
+
+            console.log('Error en el registro', error);
+
+        }
+    }
+
 
 
     return {
@@ -111,7 +182,9 @@ export const useAuth = () => {
         checkAuthToken,
         startLogout,
         getUsers,
-        startNewUsuario
+        startNewUsuario,
+        deleteUser,
+        updateUser
     }
 
 }

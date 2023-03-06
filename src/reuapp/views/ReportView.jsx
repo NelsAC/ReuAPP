@@ -1,6 +1,6 @@
 
 import { useForm } from "../../hooks/useForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowIcon, ArrowIconB, CheckIcon, DateIcon, EmptyIcon, PdfIcon, RegisterIcon, RepeatIcon } from '../../assets';
 import { format } from "date-fns";
 import { StepOne } from "../components/StepOne";
@@ -12,6 +12,11 @@ import { StepThree } from "../components/StepThree";
 
 
 export const ReportView = () => {
+
+    useEffect(() => {
+        localStorage.removeItem('fechaDesde');
+        localStorage.removeItem('fechaHasta');
+    }, [])
 
     const [step, setStep] = useState(1);
 

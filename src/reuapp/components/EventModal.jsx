@@ -1,5 +1,6 @@
 import { format } from 'date-fns/esm';
 import { es } from 'date-fns/locale';
+import { useMemo } from 'react';
 import Modal from 'react-modal';
 import { useAgenda } from '../../hooks/useAgenda';
 
@@ -13,7 +14,20 @@ Modal.setAppElement('#root');
 
 export const EventModal = ({visible, setVisible, data}) => {
 
+    
     const { expediente, fecha, interno, juzgado, dni, juez, url, user, generado, _id, estado } = data;
+
+    const newJuzgado = useMemo(() => {
+        return juzgado.length > 12 ? juzgado.substring(0, 12) + "..." : juzgado;
+      }, [juzgado]);
+
+    const newInterno = useMemo(() => {
+    return interno.length > 50 ? interno.substring(0, 50) + "..." : interno;
+    }, [interno]);
+
+    const newJuez = useMemo(() => {
+    return juez.length > 20 ? juez.substring(0, 20) + "..." : juez;
+    }, [juez]);
 
     const { updateRegister } = useAgenda();
 
@@ -32,7 +46,7 @@ export const EventModal = ({visible, setVisible, data}) => {
         isOpen={visible}
         onRequestClose={onCLoseModal}
         style={customStyles}
-        className='modal w-11/12 sm:w-2/6'
+        className='modal w-11/12 sm:w-3/6'
         overlayClassName='modal-fondo'
         closeTimeoutMS={ 200 } 
        >
@@ -53,7 +67,7 @@ export const EventModal = ({visible, setVisible, data}) => {
                 <div className='flex flex-col gap-2 pl-2'>
                     <div className='flex'>
                         <p className='font-bold text-sm mr-2'>Nombre:</p>
-                        <span className='text-sm'>{interno}</span>
+                        <span className='text-sm'>{newInterno}</span>
                     </div>
                     <div className='flex'>
                         <p className='font-bold text-sm mr-2'>Dni:</p>
@@ -83,11 +97,11 @@ export const EventModal = ({visible, setVisible, data}) => {
                     </div>
                     <div className='flex'>
                         <p className='font-bold text-sm mr-2'>Juzgado:</p>
-                        <span className='text-sm'>{juzgado}</span>
+                        <span className='text-sm'>{newJuzgado}</span>
                     </div>
                     <div className='flex'>
                         <p className='font-bold text-sm mr-2'>Juez:</p>
-                        <span className='text-sm'>{juez}</span>
+                        <span className='text-sm'>{newJuez}</span>
                     </div>
                 </div>
             </div>

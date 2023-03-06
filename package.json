@@ -19,6 +19,8 @@
     "react-router-dom": "^6.5.0",
     "react-toastify": "^9.1.1",
     "simple-zustand-devtools": "^1.1.0",
+    "sweetalert2": "^11.7.3",
+    "sweetalert2-react-content": "^5.0.7",
     "zustand": "^4.3.1"
   },
   "devDependencies": {

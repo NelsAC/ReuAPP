@@ -45,7 +45,7 @@ export const UsersView = () => {
                 : <form className='border border-gray-300 mt-8 rounded-lg bg-white p-6' onSubmit={ onCreateUser }>
                     <div>
                         <label className='text-md'>Ingrese un usuario:</label>
-                        <input autoFocus type='text' className='w-full border border-gray-300 rounded-lg py-2 px-4 mt-2' placeholder='Example: AlexKbrito' name='user' onChange={ onInputChange } value={ user } />
+                        <input autoFocus type='text' className='w-full border border-gray-300 rounded-lg py-2 px-4 mt-2' placeholder='Example: User' name='user' onChange={ onInputChange } value={ user } />
                     </div>
                     <div className='mt-4'>
                         <label className='text-md'>Ingrese una contraseña:</label>

@@ -50,8 +50,10 @@ export const useAgenda = () => {
             try {
     
                 const { data } = await agendaApi.put(`/agenda/${id}`);
-                const updateAll = all.map( register => register._id === id ? { ...register, estado: "verificado" } : register );
-                setRegistros(updateAll);
+                if (data.ok) {
+                    const updateAll = all.map( register => register._id === id ? { ...register, estado: data.registro.estado } : register );
+                    setRegistros(updateAll);
+                }
     
             } catch (error) {
     
@@ -59,6 +61,43 @@ export const useAgenda = () => {
     
             }
     }
+
+    //delete register
+    const deleteRegister = async (id) => {
+
+        try {
+
+            const { data } = await agendaApi.delete(`/agenda/${id}`);
+            if (data.ok) {
+                const newAll = all.filter( register => register._id !== id );
+                setRegistros(newAll);
+                toast.success(data.msg);
+            }
+        } catch (error) {
+
+            console.log('Error en el registro', error);
+
+        }
+    }
+
+    //generar reporte
+    const generarReporte = async (desde, hasta) => {
+    
+        try {
+
+            const { data } = await agendaApi.get(`/agenda/${desde}/${hasta}`);
+            // // const registros = data.registros;
+            // console.log(registros);
+            console.log(data);
+            
+        } catch (error) {
+            
+            console.log('Error en la generación de reporte', error);
+
+        }
+
+    }
+
 
 
 
@@ -71,7 +110,9 @@ export const useAgenda = () => {
         //* methods
         startRegistro,
         getRegisters,
-        updateRegister
+        updateRegister,
+        deleteRegister,
+        generarReporte
     }
 
 }

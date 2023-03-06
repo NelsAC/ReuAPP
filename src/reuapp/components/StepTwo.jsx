@@ -1,13 +1,19 @@
 import { ArrowIcon, ArrowIconB } from "../../assets"
 
 export const StepTwo = ({ setStep }) => {
+
+    const onBack = () => {
+        setStep(1);
+        localStorage.removeItem('fechaDesde');
+        localStorage.removeItem('fechaHasta');
+    }
     
         return (
             <>
                 <div className='mt-8 w-11/12 mx-auto flex justify-between items-center'>
                     <p className='font-bold text-xl'>Verifica las fechas</p>
                     <div className='flex gap-4'>
-                        <button type="button" className='btn-landing text-black font-semibold flex py-3 px-4 items-center bg-gray-300' style={{ borderRadius: '9px' }} onClick={ ()=> setStep(1) }>
+                        <button type="button" className='btn-landing text-black font-semibold flex py-3 px-4 items-center bg-gray-300' style={{ borderRadius: '9px' }} onClick={ onBack }>
                             <ArrowIconB />
                             <p className='ml-1' style={{ fontSize: '15px' }}>Atrás</p>
                         </button>
