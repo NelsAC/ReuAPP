@@ -1,16 +1,12 @@
-import { useEffect } from "react";
 import { NewIcon } from "../../assets/NewIcon"
-
+import { ReportTable } from './ReportTable'
 import pdf from '../../assets/pdf.gif';
 import { useAgenda } from "../../hooks/useAgenda";
 
+
 export const StepThree = ({ setStep }) => {
 
-        const { generarReporte } = useAgenda();
-
-        useEffect(() => {
-            generarReporte( localStorage.getItem('fechaDesde'), localStorage.getItem('fechaHasta') );
-        }, [])
+        const { reportRegisters, isChekingReport } = useAgenda();
 
         const onBack = () => {
             setStep(1);
@@ -29,11 +25,15 @@ export const StepThree = ({ setStep }) => {
                         </button>
                     </div>
                 </div>
-                <div className='mt-12 flex justify-center flex-col items-center'>
-                    <img className='w-44' src={ pdf } alt="" />
-                    <p className='font-semibold'>Generando PDF...</p>
-                    <p className=''>Esto puede tomar algunos segundos</p>
-                </div>
+                {
+                    isChekingReport ?
+                    <div className='mt-12 flex justify-center flex-col items-center'>
+                        <img className='w-44' src={ pdf } alt="" />
+                        <p className='font-semibold'>Generando PDF...</p>
+                        <p className=''>Esto puede tomar algunos segundos</p>
+                    </div> :
+                    <ReportTable  data={ reportRegisters } />
+                }
             </>
         )
     }

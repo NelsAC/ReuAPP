@@ -8,6 +8,10 @@ export const useAgenda = () => {
 
     const setRegistros = useAgendaStore(state => state.setRegistros);
     const all = useAgendaStore(state => state.all);
+    const setChekingReport = useAgendaStore(state => state.setChekingReport);
+    const setNotChekingReport = useAgendaStore(state => state.setNotChekingReport);
+    const reportRegisters = useAgendaStore(state => state.reportRegisters);
+    const isChekingReport = useAgendaStore(state => state.isChekingReport);
 
     const startRegistro = async ({interno, dni='', juez, juzgado, fechaDate, expediente, url}) => {
 
@@ -84,11 +88,14 @@ export const useAgenda = () => {
     const generarReporte = async (desde, hasta) => {
     
         try {
-
+            setChekingReport();
             const { data } = await agendaApi.get(`/agenda/${desde}/${hasta}`);
-            // // const registros = data.registros;
-            // console.log(registros);
-            console.log(data);
+            setTimeout(() => {
+                if (data.ok) {
+                    const registers = data.registrosPedidos;
+                    setNotChekingReport(registers);
+                }
+            }, 3000);
             
         } catch (error) {
             
@@ -105,6 +112,8 @@ export const useAgenda = () => {
     return {
         //* properties
         all,
+        reportRegisters,
+        isChekingReport,
         // todo: add properties refered to register
 
         //* methods

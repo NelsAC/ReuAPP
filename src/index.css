@@ -330,3 +330,7 @@ h3 {
       height: 40px;
     }
   }
+
+  .dateSteps::first-letter {
+    text-transform: uppercase;
+  }
