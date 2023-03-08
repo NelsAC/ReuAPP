@@ -25,3 +25,4 @@ export * from './DateIcon';
 export * from './CheckIcon';
 export * from './PdfIcon';
 export * from './RepeatIcon';
+export * from './PdfSvg';
