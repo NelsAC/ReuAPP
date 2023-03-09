@@ -26,3 +26,6 @@ export * from './CheckIcon';
 export * from './PdfIcon';
 export * from './RepeatIcon';
 export * from './PdfSvg';
+export * from './CheckCircle';
+export * from './WarnCircle';
+export * from './RegIcon';
