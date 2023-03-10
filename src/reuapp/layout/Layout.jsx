@@ -13,7 +13,7 @@ export const Layout = ({ children }) => {
     return (
         <div className='mx-auto flex flex-col min-h-screen' style={{ width: '768px' }}>
             <Header />
-                <div className="flex-auto">
+                <div className="flex-auto flex11">
                     {children}
                 </div>
             <Footer />
